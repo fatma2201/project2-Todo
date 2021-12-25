@@ -34,13 +34,27 @@ axios
 })
 
   }
-  const mapOverTasks=tasks.map((taskObj,i)=> (<Todo key={i}  task={taskObj}/> ))
+  const deleteTodo=(id) =>{ 
+    axios
+.delete(`http://localhost:5000/tasks/${id}`)
+.then((response)=>{
+ // console.log('RESPONSE: ',response)
+  console.log('DATA: ', response.data)
+ // setTasks(response.data)
+ getData()
+})
+.catch((err)=>{
+  console.log("ERR: ",err)
+})
+  }
+  const mapOverTasks=tasks.map((taskObj,i)=> (<Todo key={i}  task={taskObj} deleteTodo={deleteTodo}/> ))
   
   return (
     <div className='app'>
       <p>app</p>
-      <Add createFunc={postNewTodo}/>
+      
       <button onClick={getData}>Get TASKS</button>
+      <Add createFunc={postNewTodo}/>
       {mapOverTasks}
     </div>
   )
